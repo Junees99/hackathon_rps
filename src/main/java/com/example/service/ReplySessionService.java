@@ -68,14 +68,14 @@ public class ReplySessionService {
                 if (resultSet.next()) {
                     String winnerNo = decideWinner(resultSet);
                     if (winnerNo.equals("0000")) {
-                        st = connection.prepareStatement("UPDATE session SET winner_no = ? status = ?  WHERE session_id = ?",ResultSet.TYPE_SCROLL_SENSITIVE,
+                        st = connection.prepareStatement("UPDATE session SET winner_no = ?, status = ?  WHERE session_id = ?",ResultSet.TYPE_SCROLL_SENSITIVE,
                                 ResultSet.CONCUR_UPDATABLE);
                         st.setString(1, winnerNo);
                         st.setString(2, StatusEnum.COMPLETED.getCode());
                         st.setString(3, replySessionRequest.getSessionId());
                         st.executeUpdate();
                     } else {
-                        st = connection.prepareStatement("UPDATE session SET winner_no = ? status = ?  WHERE session_id = ?",ResultSet.TYPE_SCROLL_SENSITIVE,
+                        st = connection.prepareStatement("UPDATE session SET winner_no = ?, status = ?  WHERE session_id = ?",ResultSet.TYPE_SCROLL_SENSITIVE,
                                 ResultSet.CONCUR_UPDATABLE);
                         st.setString(1, winnerNo);
                         st.setString(2, StatusEnum.PAYMENT_PENDING.getCode());
