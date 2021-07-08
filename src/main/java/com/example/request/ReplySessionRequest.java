@@ -4,6 +4,8 @@ public class ReplySessionRequest {
     private String sessionId;
     private String receiverMove;
     private String receiverNo;
+    private boolean accept;
+
 
     public String getReceiverNo() {
         return receiverNo;
@@ -13,7 +15,6 @@ public class ReplySessionRequest {
         this.receiverNo = receiverNo;
     }
 
-    private boolean accept;
 
     public String getSessionId() {
         return sessionId;
@@ -31,7 +32,7 @@ public class ReplySessionRequest {
         this.receiverMove = receiverMove;
     }
 
-    public boolean isAccept() {
+    public boolean getAccept() {
         return accept;
     }
 

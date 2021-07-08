@@ -43,7 +43,7 @@ public class ReplySessionService {
                 throw new Exception("Session ID does not exist");
             }
 
-            if (!replySessionRequest.isAccept()){
+            if (!replySessionRequest.getAccept()){
 
                 st = st = connection.prepareStatement("UPDATE session SET status = ?  WHERE session_id = ?");
                 st.setString(1, StatusEnum.CANCELLED.getCode());
