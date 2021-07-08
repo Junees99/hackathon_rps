@@ -21,7 +21,7 @@ public class CreateUserService {
         CreateUserResult createUserResult = new CreateUserResult();
         createUserResult.setId(mobile_no);
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement st = connection.prepareStatement("INSERT INTO TASKS (name,mobile_no) VALUES (?, ?)");
+            PreparedStatement st = connection.prepareStatement("INSERT INTO customer (name,mobile_no) VALUES (?, ?)");
             st.setString(1,name);
             st.setString(2,mobile_no);
             st.executeUpdate();
