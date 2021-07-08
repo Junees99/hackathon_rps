@@ -5,7 +5,7 @@ public enum Move {
 
     PAPER("PAPER"),
 
-    SCISSOR("SCISSOR");
+    SCISSORS("SCISSORS");
 
 
 

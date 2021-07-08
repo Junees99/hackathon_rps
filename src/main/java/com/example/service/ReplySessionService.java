@@ -121,11 +121,11 @@ public class ReplySessionService {
             return receiverNo;
         }
 
-        if (Move.PAPER.getCode().equals(senderMove) && Move.SCISSOR.getCode().equals(receiverMove)) {
+        if (Move.PAPER.getCode().equals(senderMove) && Move.SCISSORS.getCode().equals(receiverMove)) {
             return receiverNo;
         }
 
-        if (Move.SCISSOR.getCode().equals(senderMove) && Move.ROCK.getCode().equals(receiverMove)) {
+        if (Move.SCISSORS.getCode().equals(senderMove) && Move.ROCK.getCode().equals(receiverMove)) {
             return receiverNo;
         }
 

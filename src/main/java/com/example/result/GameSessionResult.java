@@ -8,6 +8,15 @@ public class GameSessionResult {
     private String receiverMove;
     private String status;
     private String winnerNo;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getSessionId() {
         return sessionId;
