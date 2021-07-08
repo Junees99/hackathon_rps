@@ -56,7 +56,7 @@ public class RetrieveGameSessionService {
             st = connection.prepareStatement("SELECT * FROM session WHERE receiver_no = ?");
             st.setString(1,mobile_no);
            ResultSet receiverResultSet = st.executeQuery();
-            while (senderResultSet.next()){
+            while (receiverResultSet.next()){
                 GameSessionResult gameSessionResult = new GameSessionResult();
                 gameSessionResult.setSessionId(receiverResultSet.getString("session_id"));
                 gameSessionResult.setSenderNo(receiverResultSet.getString("sender_no"));
