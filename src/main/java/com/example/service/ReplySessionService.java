@@ -82,21 +82,25 @@ public class ReplySessionService {
                         st.setString(3, replySessionRequest.getSessionId());
                         st.executeUpdate();
                     }
-
+                    String debtorNo = "";
                     if (winnerNo.equals(resultSet.getString("sender_no"))) {
                         replySessionResult.setWinning(Winning.LOSE.getCode());
+                        debtorNo = resultSet.getString("receiver_no");
                     } else if (winnerNo.equals(resultSet.getString("receiver_no"))) {
                         replySessionResult.setWinning(Winning.WIN.getCode());
+                        debtorNo = resultSet.getString("sender_no");
                     } else {
                         replySessionResult.setWinning(Winning.DRAW.getCode());
                     }
+
+                    insertDebt(resultSet.getString("session_id"),debtorNo,winnerNo);
+
                 }
             }
             replySessionResult.setSuccess(true);
         } catch (Exception e){
             replySessionResult.setSuccess(false);
             replySessionResult.setErrorMessage(e.getMessage());
-
             e.printStackTrace();
         }
         return replySessionResult;
@@ -126,6 +130,21 @@ public class ReplySessionService {
        }
 
        return senderNo;
+    }
+
+    private void insertDebt(String session, String debtorNo, String winningNo) throws SQLException{
+        String creditorName = "";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement st = connection.prepareStatement("INSERT INTO debt(session_id,debtor_no,creditor_no,status) VALUES(?,?,?,?)"
+                    ,ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            st.setString(1,session);
+            st.setString(2,debtorNo);
+            st.setString(3,winningNo);
+            st.setString(4,"UNSETTLED");
+        }catch (Exception e){
+            throw e;
+        }
     }
 
 
