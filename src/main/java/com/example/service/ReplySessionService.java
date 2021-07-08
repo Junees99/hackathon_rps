@@ -142,6 +142,7 @@ public class ReplySessionService {
             st.setString(2,debtorNo);
             st.setString(3,winningNo);
             st.setString(4,"UNSETTLED");
+            st.executeUpdate();
         }catch (Exception e){
             throw e;
         }
