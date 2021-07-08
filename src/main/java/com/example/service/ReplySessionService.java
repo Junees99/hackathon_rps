@@ -5,6 +5,7 @@ import com.example.StatusEnum.StatusEnum;
 import com.example.StatusEnum.Winning;
 import com.example.request.ReplySessionRequest;
 import com.example.result.ReplySessionResult;
+import com.example.util.MobileNoEditor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,7 +38,7 @@ public class ReplySessionService {
                     throw new Exception("Session already COMPLETED / CANCELLED");
                 }
 
-                if (!StringUtils.equals(replySessionRequest.getReceiverNo(), resultSet.getString("receiver_no"))) {
+                if (!StringUtils.equals(MobileNoEditor.editMobileNo(replySessionRequest.getReceiverNo()), resultSet.getString("receiver_no"))) {
                     throw new Exception("You are not authorized to reply to this game");
                 }
 

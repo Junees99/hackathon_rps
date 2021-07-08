@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.request.CreateUserRequest;
 import com.example.result.CreateUserResult;
+import com.example.util.MobileNoEditor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +19,7 @@ public class CreateUserService {
     private DataSource dataSource;
 
     public CreateUserResult createUser(CreateUserRequest createUserRequest) {
-        String mobile_no = createUserRequest.getMobile_no();
+        String mobile_no = MobileNoEditor.editMobileNo(createUserRequest.getMobile_no());
         String name = createUserRequest.getName();
         CreateUserResult createUserResult = new CreateUserResult();
         createUserResult.setId(mobile_no);

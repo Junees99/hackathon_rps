@@ -4,6 +4,7 @@ import com.example.StatusEnum.StatusEnum;
 import com.example.request.CreateGameSessionRequest;
 import com.example.result.CreateGameSessionResult;
 import com.example.result.CreateUserResult;
+import com.example.util.MobileNoEditor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,10 +25,10 @@ public class CreateGameSessionService {
 
             PreparedStatement st = connection.prepareStatement("INSERT INTO session (session_id,sender_no,receiver_no,sender_move,status, amount) VALUES(?,?,?,?,?,?)");
             st.setString(1,createGameSessionRequest.getSessionID());
-            st.setString(2,createGameSessionRequest.getSenderNo());
-            st.setString(3,createGameSessionRequest.getReceiverNo());
+            st.setString(2,MobileNoEditor.editMobileNo(createGameSessionRequest.getSenderNo()));
+            st.setString(3,MobileNoEditor.editMobileNo(createGameSessionRequest.getReceiverNo()));
             st.setString(4,createGameSessionRequest.getSenderMove());
-            st.setString(5, StatusEnum.PENDING.toString());
+            st.setString(5,StatusEnum.PENDING.toString());
             st.setDouble(6,createGameSessionRequest.getAmount());
             st.executeUpdate();
             createGameSessionResult.setSuccess(true);
