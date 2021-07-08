@@ -3,6 +3,16 @@ package com.example.request;
 public class ReplySessionRequest {
     private String sessionId;
     private String receiverMove;
+    private String receiverNo;
+
+    public String getReceiverNo() {
+        return receiverNo;
+    }
+
+    public void setReceiverNo(String receiverNo) {
+        this.receiverNo = receiverNo;
+    }
+
     private boolean accept;
 
     public String getSessionId() {

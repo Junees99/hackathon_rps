@@ -26,13 +26,19 @@ public class ReplySessionService {
         replySessionResult.setId(replySessionRequest.getSessionId());
         try (Connection connection = dataSource.getConnection()) {
 
-            PreparedStatement st = st = connection.prepareStatement("SELECT status FROM session where session_id = ?");
+            PreparedStatement st = st = connection.prepareStatement("SELECT status, receiver_no FROM session where session_id = ?");
             st.setString(1, replySessionRequest.getSessionId());
             ResultSet resultSet = st.executeQuery();
             if (resultSet.next()){
+
                 if (StatusEnum.PENDING.equals(resultSet.getString("status"))){
                     throw new Exception("Session already COMPLETED / CANCELLED");
                 }
+
+                if (StringUtils.equals(replySessionRequest.getReceiverNo(),resultSet.getString("receiver_no"))){
+                    throw new Exception("You are not authorized to reply to this game");
+                }
+
             }else {
                 throw new Exception("Session ID does not exist");
             }
