@@ -55,23 +55,23 @@ public class RetrieveGameSessionService {
 
             st = connection.prepareStatement("SELECT * FROM session WHERE receiver_no = ?");
             st.setString(1,mobile_no);
-            senderResultSet = st.executeQuery();
+           ResultSet receiverResultSet = st.executeQuery();
             while (senderResultSet.next()){
                 GameSessionResult gameSessionResult = new GameSessionResult();
-                gameSessionResult.setSessionId(senderResultSet.getString("session_id"));
-                gameSessionResult.setSenderNo(senderResultSet.getString("sender_no"));
-                gameSessionResult.setSenderMove(senderResultSet.getString("sender_move"));
-                gameSessionResult.setReceiverNo(senderResultSet.getString("receiver_no"));
-                gameSessionResult.setReceiverMove(senderResultSet.getString("receiver_move"));
-                gameSessionResult.setStatus(senderResultSet.getString("status"));
-                gameSessionResult.setWinnerNo(senderResultSet.getString("winner_no"));
-                gameSessionResult.setName(name);
+                gameSessionResult.setSessionId(receiverResultSet.getString("session_id"));
+                gameSessionResult.setSenderNo(receiverResultSet.getString("sender_no"));
+                gameSessionResult.setSenderMove(receiverResultSet.getString("sender_move"));
+                gameSessionResult.setReceiverNo(receiverResultSet.getString("receiver_no"));
+                gameSessionResult.setReceiverMove(receiverResultSet.getString("receiver_move"));
+                gameSessionResult.setStatus(receiverResultSet.getString("status"));
+                gameSessionResult.setWinnerNo(receiverResultSet.getString("winner_no"));
                 st = connection.prepareStatement("SELECT name FROM users WHERE mobile_no = ?");
                 st.setString(1,gameSessionResult.getSenderNo());
                 ResultSet resultSet1 = st.executeQuery();
                 if (resultSet1.next()){
                     name = resultSet1.getString("name");
                 }
+                gameSessionResult.setName(name);
                 invitedGameSessionResultList.add(gameSessionResult);
             }
 
