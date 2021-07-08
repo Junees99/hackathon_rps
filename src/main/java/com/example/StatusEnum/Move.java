@@ -1,20 +1,17 @@
 package com.example.StatusEnum;
 
+public enum Move {
+    ROCK("ROCK"),
 
+    PAPER("PAPER"),
 
-public enum StatusEnum {
-
-    PENDING("PENDING"),
-
-    CANCELLED("CANCELLED"),
-
-    COMPLETED("COMPLETED");
+    SCISSOR("SCISSOR");
 
 
 
     private String code;
 
-    StatusEnum (String code) {
+    Move (String code) {
         this.code = code;
     }
 
@@ -25,6 +22,4 @@ public enum StatusEnum {
     public void setCode(String code) {
         this.code = code;
     }
-
-
 }
