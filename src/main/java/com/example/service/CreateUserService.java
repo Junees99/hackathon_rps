@@ -21,7 +21,7 @@ public class CreateUserService {
         createUserResult.setId(mobile_no);
         try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate(String.format("INSERT INTO customer VALUES ('%s','%s')",name,mobile_no));
+            stmt.executeUpdate(String.format("INSERT INTO customer VALUES (%s,%s)",name,mobile_no));
             createUserResult.setSuccess(true);
         } catch (Exception e){
             createUserResult.setSuccess(false);
