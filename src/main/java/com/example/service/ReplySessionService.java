@@ -26,7 +26,7 @@ public class ReplySessionService {
         replySessionResult.setId(replySessionRequest.getSessionId());
         try (Connection connection = dataSource.getConnection()) {
 
-            PreparedStatement st = st = connection.prepareStatement("SELECT status, receiver_no FROM session where session_id = ?"
+            PreparedStatement st = connection.prepareStatement("SELECT status, receiver_no FROM session where session_id = ?"
                     ,ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             st.setString(1, replySessionRequest.getSessionId());
@@ -47,7 +47,7 @@ public class ReplySessionService {
 
             if (!replySessionRequest.getAccept()){
 
-                st = st = connection.prepareStatement("UPDATE session SET status = ?  WHERE session_id = ?",ResultSet.TYPE_SCROLL_SENSITIVE,
+                st = connection.prepareStatement("UPDATE session SET status = ?  WHERE session_id = ?",ResultSet.TYPE_SCROLL_SENSITIVE,
                         ResultSet.CONCUR_UPDATABLE);
                 st.setString(1, StatusEnum.CANCELLED.getCode());
                 st.setString(2, replySessionRequest.getSessionId());
@@ -55,7 +55,7 @@ public class ReplySessionService {
 
             }else {
 
-                st = st = connection.prepareStatement("UPDATE session SET receiver_move = ?  WHERE session_id = ?",ResultSet.TYPE_SCROLL_SENSITIVE,
+                st = connection.prepareStatement("UPDATE session SET receiver_move = ?  WHERE session_id = ?",ResultSet.TYPE_SCROLL_SENSITIVE,
                         ResultSet.CONCUR_UPDATABLE);
                 st.setString(1, replySessionRequest.getReceiverMove());
                 st.setString(2, replySessionRequest.getSessionId());
