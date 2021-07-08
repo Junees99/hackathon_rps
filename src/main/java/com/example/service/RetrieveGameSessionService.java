@@ -32,9 +32,9 @@ public class RetrieveGameSessionService {
                 GameSessionResult gameSessionResult = new GameSessionResult();
                 gameSessionResult.setSessionId(senderResultSet.getString("session_id"));
                 gameSessionResult.setSenderNo(senderResultSet.getString("sender_no"));
-                gameSessionResult.setSenderMove("sender_mover");
+                gameSessionResult.setSenderMove(senderResultSet.getString("sender_move"));
                 gameSessionResult.setReceiverNo(senderResultSet.getString("receiver_no"));
-                gameSessionResult.setReceiverMove("receiver_move");
+                gameSessionResult.setReceiverMove(senderResultSet.getString("receiver_move"));
                 gameSessionResult.setStatus(senderResultSet.getString("status"));
                 gameSessionResult.setWinnerNo(senderResultSet.getString("winner_no"));
                 initiatedGameSessionResultList.add(gameSessionResult);
@@ -47,9 +47,9 @@ public class RetrieveGameSessionService {
                 GameSessionResult gameSessionResult = new GameSessionResult();
                 gameSessionResult.setSessionId(senderResultSet.getString("session_id"));
                 gameSessionResult.setSenderNo(senderResultSet.getString("sender_no"));
-                gameSessionResult.setSenderMove("sender_mover");
+                gameSessionResult.setSenderMove(senderResultSet.getString("sender_move"));
                 gameSessionResult.setReceiverNo(senderResultSet.getString("receiver_no"));
-                gameSessionResult.setReceiverMove("receiver_move");
+                gameSessionResult.setReceiverMove(senderResultSet.getString("receiver_move"));
                 gameSessionResult.setStatus(senderResultSet.getString("status"));
                 gameSessionResult.setWinnerNo(senderResultSet.getString("winner_no"));
                 invitedGameSessionResultList.add(gameSessionResult);
