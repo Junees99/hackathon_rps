@@ -3,6 +3,7 @@ package com.example.result;
 public class CreateUserResult {
     private String id;
     private boolean success;
+    private String errorMessage;
 
     public void setId(String id) {
         this.id = id;
@@ -20,5 +21,11 @@ public class CreateUserResult {
         return id;
     }
 
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 
+    public String getErrorMessage() {
+        return errorMessage;
+    }
 }

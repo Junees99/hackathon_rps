@@ -1,11 +1,11 @@
 package com.example.controller;
 
+import com.example.result.CreateUserResult;
+import com.example.service.CreateUserService;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.example.result.CreateUserResult;
-import com.example.service.CreateUserService;
 
 @RestController
 @RequestMapping(value = "/", method = RequestMethod.POST)
