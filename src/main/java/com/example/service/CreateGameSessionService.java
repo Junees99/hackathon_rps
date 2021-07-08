@@ -22,12 +22,13 @@ public class CreateGameSessionService {
         createGameSessionResult.setSessionID(createGameSessionRequest.getSessionID());
         try (Connection connection = dataSource.getConnection()) {
 
-            PreparedStatement st = connection.prepareStatement("INSERT INTO session (session_id,sender_no,receiver_no,sender_move,status) VALUES(?,?,?,?,?)");
+            PreparedStatement st = connection.prepareStatement("INSERT INTO session (session_id,sender_no,receiver_no,sender_move,status, amount) VALUES(?,?,?,?,?,?)");
             st.setString(1,createGameSessionRequest.getSessionID());
             st.setString(2,createGameSessionRequest.getSenderNo());
             st.setString(3,createGameSessionRequest.getReceiverNo());
             st.setString(4,createGameSessionRequest.getSenderMove());
             st.setString(5, StatusEnum.PENDING.toString());
+            st.setDouble(6,createGameSessionRequest.getAmount());
             st.executeUpdate();
             createGameSessionResult.setSuccess(true);
         } catch (Exception e){
