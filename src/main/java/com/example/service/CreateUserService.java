@@ -25,7 +25,7 @@ public class CreateUserService {
             PreparedStatement st = connection.prepareStatement("SELECT * FROM customer WHERE mobile_no = ?");
             st.setString(1,mobile_no);
             ResultSet resultSet = st.executeQuery();
-            if (!resultSet.next()){
+            if (resultSet.next()){
                 createUserResult.setSuccess(true);
                 return createUserResult;
             }
