@@ -26,7 +26,9 @@ public class ReplySessionService {
         replySessionResult.setId(replySessionRequest.getSessionId());
         try (Connection connection = dataSource.getConnection()) {
 
-            PreparedStatement st = st = connection.prepareStatement("SELECT status, receiver_no FROM session where session_id = ?");
+            PreparedStatement st = st = connection.prepareStatement("SELECT status, receiver_no FROM session where session_id = ?"
+                    ,ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
             st.setString(1, replySessionRequest.getSessionId());
             ResultSet resultSet = st.executeQuery();
             if (resultSet.next()){
@@ -45,30 +47,35 @@ public class ReplySessionService {
 
             if (!replySessionRequest.getAccept()){
 
-                st = st = connection.prepareStatement("UPDATE session SET status = ?  WHERE session_id = ?");
+                st = st = connection.prepareStatement("UPDATE session SET status = ?  WHERE session_id = ?",ResultSet.TYPE_SCROLL_SENSITIVE,
+                        ResultSet.CONCUR_UPDATABLE);
                 st.setString(1, StatusEnum.CANCELLED.getCode());
                 st.setString(2, replySessionRequest.getSessionId());
                 st.executeUpdate();
 
             }else {
 
-                st = st = connection.prepareStatement("UPDATE session SET receiver_move = ?  WHERE session_id = ?");
+                st = st = connection.prepareStatement("UPDATE session SET receiver_move = ?  WHERE session_id = ?",ResultSet.TYPE_SCROLL_SENSITIVE,
+                        ResultSet.CONCUR_UPDATABLE);
                 st.setString(1, replySessionRequest.getReceiverMove());
                 st.setString(2, replySessionRequest.getSessionId());
                 st.executeUpdate();
 
-                st = connection.prepareStatement("SELECT * FROM session WHERE session_id = ?");
+                st = connection.prepareStatement("SELECT * FROM session WHERE session_id = ?",ResultSet.TYPE_SCROLL_SENSITIVE,
+                        ResultSet.CONCUR_UPDATABLE);
                 st.setString(1, replySessionRequest.getSessionId());
                  resultSet = st.executeQuery();
                 if (resultSet.next()) {
                     String winnerNo = decideWinner(resultSet);
                     if (winnerNo.equals("0000")) {
-                        st = connection.prepareStatement("UPDATE session SET winner_no = ? status = ?  WHERE session_id = ?");
+                        st = connection.prepareStatement("UPDATE session SET winner_no = ? status = ?  WHERE session_id = ?",ResultSet.TYPE_SCROLL_SENSITIVE,
+                                ResultSet.CONCUR_UPDATABLE);
                         st.setString(1, winnerNo);
                         st.setString(2, StatusEnum.COMPLETED.getCode());
                         st.setString(3, replySessionRequest.getSessionId());
                     } else {
-                        st = connection.prepareStatement("UPDATE session SET winner_no = ? status = ?  WHERE session_id = ?");
+                        st = connection.prepareStatement("UPDATE session SET winner_no = ? status = ?  WHERE session_id = ?",ResultSet.TYPE_SCROLL_SENSITIVE,
+                                ResultSet.CONCUR_UPDATABLE);
                         st.setString(1, winnerNo);
                         st.setString(2, StatusEnum.PAYMENT_PENDING.getCode());
                         st.setString(3, replySessionRequest.getSessionId());
@@ -87,6 +94,7 @@ public class ReplySessionService {
         } catch (Exception e){
             replySessionResult.setSuccess(false);
             replySessionResult.setErrorMessage(e.getMessage());
+
             e.printStackTrace();
         }
         return replySessionResult;
