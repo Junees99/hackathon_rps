@@ -4,6 +4,8 @@ public class ReplySessionResult {
     private boolean success;
     private String errorMessage;
     private String id;
+    private String winning;
+
 
     public String getId() {
         return id;
@@ -13,7 +15,6 @@ public class ReplySessionResult {
         this.id = id;
     }
 
-    private String winning;
 
     public boolean isSuccess() {
         return success;
@@ -31,7 +32,7 @@ public class ReplySessionResult {
         this.errorMessage = errorMessage;
     }
 
-    public String isWinning() {
+    public String getWinning() {
         return winning;
     }
 
