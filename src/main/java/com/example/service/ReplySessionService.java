@@ -33,7 +33,7 @@ public class ReplySessionService {
             ResultSet resultSet = st.executeQuery();
             if (resultSet.next()){
 
-                if (!StatusEnum.PENDING.equals(resultSet.getString("status"))){
+                if (!StatusEnum.PENDING.getCode().equals(resultSet.getString("status"))){
                     throw new Exception("Session already COMPLETED / CANCELLED");
                 }
 
