@@ -5,6 +5,15 @@ public class CreateGameSessionRequest {
     private String receiverNo;
     private String senderMove;
     private String sessionID;
+    private Double amount;
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
 
     public void setReceiverNo(String receiverNo) {
         this.receiverNo = receiverNo;

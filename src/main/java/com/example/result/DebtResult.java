@@ -2,6 +2,15 @@ package com.example.result;
 
 public class DebtResult {
     private String name;
+    private double amount;
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
 
     public String getMobile_no() {
         return mobile_no;

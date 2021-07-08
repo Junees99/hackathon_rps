@@ -26,7 +26,7 @@ public class CheckDebtService {
         checkDebtResult.setId(mobile_no);
         try (Connection connection = dataSource.getConnection()) {
 
-            PreparedStatement st = connection.prepareStatement("SELECT sender_no, receiver_no, winner_no FROM session WHERE " +
+            PreparedStatement st = connection.prepareStatement("SELECT amount, sender_no, receiver_no, winner_no FROM session WHERE " +
                     "sender_no = ? OR receiver_no = ? AND winner_no != ? AND status =?",ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             st.setString(1,mobile_no);
@@ -51,6 +51,7 @@ public class CheckDebtService {
                     }
                     debtResult.setName(creditorName);
                     debtResult.setMobile_no(creditorNo);
+                    debtResult.setAmount(resultSet1.getDouble("amount"));
                     debtResultArrayList.add(debtResult);
                 }while (resultSet.next());
                 checkDebtResult.setCreditors(debtResultArrayList);
