@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.request.CreateUserRequest;
 import com.example.result.CreateUserResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,9 @@ public class CreateUserService {
     @Autowired
     private DataSource dataSource;
 
-    public CreateUserResult createUser(String name, String mobile_no) {
+    public CreateUserResult createUser(CreateUserRequest createUserRequest) {
+        String mobile_no = createUserRequest.getMobile_no();
+        String name = createUserRequest.getName();
         CreateUserResult createUserResult = new CreateUserResult();
         createUserResult.setId(mobile_no);
         try (Connection connection = dataSource.getConnection()) {

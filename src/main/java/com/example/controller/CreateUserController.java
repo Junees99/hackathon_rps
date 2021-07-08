@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import com.example.request.CreateUserRequest;
+import com.example.request.MobileNoReq;
 import com.example.result.CreateUserResult;
 import com.example.service.CreateUserService;
 import com.google.gson.JsonObject;
@@ -15,11 +17,8 @@ public class CreateUserController {
     private CreateUserService createUserService;
 
     @PostMapping(value = "/createUser")
-    public CreateUserResult createUser(@RequestParam String requestData){
-        JsonObject jsonObject = new JsonParser().parse(requestData).getAsJsonObject();
-        String name = jsonObject.get("name").getAsString();
-        String mobile_no = jsonObject.get("mobile_no").getAsString();
-        return createUserService.createUser(name,mobile_no);
+    public CreateUserResult createUser(@RequestBody CreateUserRequest createUserRequest){
+        return createUserService.createUser(createUserRequest);
     }
 
 

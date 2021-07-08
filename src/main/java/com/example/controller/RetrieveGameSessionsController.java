@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.request.MobileNoReq;
 import com.example.result.RetrieveGameSessionResult;
 import com.example.service.RetrieveGameSessionService;
 import com.google.gson.JsonObject;
@@ -15,10 +16,8 @@ public class RetrieveGameSessionsController{
     private RetrieveGameSessionService retrieveGameSessionService;
 
     @PostMapping(value = "/requestSession")
-    public RetrieveGameSessionResult createUser(@RequestParam String requestData){
-        JsonObject jsonObject = new JsonParser().parse(requestData).getAsJsonObject();
-        String mobile_no = jsonObject.get("mobile_no").getAsString();
-        return retrieveGameSessionService.retrieveGameSessionResult(mobile_no);
+    public RetrieveGameSessionResult createUser(@RequestBody MobileNoReq mobileNoReq){
+        return retrieveGameSessionService.retrieveGameSessionResult(mobileNoReq);
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.request.MobileNoReq;
 import com.example.result.GameSessionResult;
 import com.example.result.RetrieveGameSessionResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,8 @@ public class RetrieveGameSessionService {
     @Autowired
     private DataSource dataSource;
 
-    public RetrieveGameSessionResult retrieveGameSessionResult(String mobile_no){
+    public RetrieveGameSessionResult retrieveGameSessionResult(MobileNoReq mobileNoReq){
+        String mobile_no = mobileNoReq.getMobile_no();
         RetrieveGameSessionResult retrieveGameSessionResult = new RetrieveGameSessionResult();
         retrieveGameSessionResult.setId(mobile_no);
 
