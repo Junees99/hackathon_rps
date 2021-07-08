@@ -66,10 +66,11 @@ public class RetrieveGameSessionService {
                 gameSessionResult.setStatus(senderResultSet.getString("status"));
                 gameSessionResult.setWinnerNo(senderResultSet.getString("winner_no"));
                 gameSessionResult.setName(name);
+                st = connection.prepareStatement("SELECT name FROM users WHERE mobile_no = ?");
                 st.setString(1,gameSessionResult.getSenderNo());
-                ResultSet resultSet = st.executeQuery();
-                if (resultSet.next()){
-                    name = resultSet.getString("name");
+                ResultSet resultSet1 = st.executeQuery();
+                if (resultSet1.next()){
+                    name = resultSet1.getString("name");
                 }
                 invitedGameSessionResultList.add(gameSessionResult);
             }
