@@ -437,7 +437,7 @@ Don’t forget to type `exit` to exit the shell and terminate the dyno.
 
 Add-ons are cloud services that provide additional services for your application, such as databases, logging, and monitoring.
 
-By default, Heroku stores your app's 1500 most recent log lines. However, the full log stream is available as a service, and several logging add-ons are available that provide features such as log persistence, search, and alerting.
+By default, Heroku stores your app's 1500 most recent log lines. However, the full log stream is available as a com.example.service, and several logging add-ons are available that provide features such as log persistence, search, and alerting.
 
 In this step you'll provision one of these logging add-ons, Papertrail.
 

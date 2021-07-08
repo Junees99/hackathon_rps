@@ -69,7 +69,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.*;
 
-@Controller
+@com.example.controller
 @SpringBootApplication
 public class DemoApplication {
 
