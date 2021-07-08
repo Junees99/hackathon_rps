@@ -29,14 +29,9 @@ public class RetrieveGameSessionService {
             ArrayList<GameSessionResult> invitedGameSessionResultList = new ArrayList<>();
 
             String name = "";
-            PreparedStatement st = connection.prepareStatement("SELECT name FROM users WHERE mobile_no = ?");
-            st.setString(1,mobile_no);
-            ResultSet resultSet = st.executeQuery();
-            if (resultSet.next()){
-                name = resultSet.getString("name");
-            }
 
-             st = connection.prepareStatement("SELECT * FROM session WHERE sender_no = ?");
+
+            PreparedStatement st = connection.prepareStatement("SELECT * FROM session WHERE sender_no = ?");
             st.setString(1,mobile_no);
             ResultSet senderResultSet = st.executeQuery();
             while (senderResultSet.next()){
@@ -48,6 +43,12 @@ public class RetrieveGameSessionService {
                 gameSessionResult.setReceiverMove(senderResultSet.getString("receiver_move"));
                 gameSessionResult.setStatus(senderResultSet.getString("status"));
                 gameSessionResult.setWinnerNo(senderResultSet.getString("winner_no"));
+                st = connection.prepareStatement("SELECT name FROM users WHERE mobile_no = ?");
+                st.setString(1,gameSessionResult.getReceiverNo());
+                ResultSet resultSet = st.executeQuery();
+                if (resultSet.next()){
+                    name = resultSet.getString("name");
+                }
                 gameSessionResult.setName(name);
                 initiatedGameSessionResultList.add(gameSessionResult);
             }
@@ -65,6 +66,11 @@ public class RetrieveGameSessionService {
                 gameSessionResult.setStatus(senderResultSet.getString("status"));
                 gameSessionResult.setWinnerNo(senderResultSet.getString("winner_no"));
                 gameSessionResult.setName(name);
+                st.setString(1,gameSessionResult.getSenderNo());
+                ResultSet resultSet = st.executeQuery();
+                if (resultSet.next()){
+                    name = resultSet.getString("name");
+                }
                 invitedGameSessionResultList.add(gameSessionResult);
             }
 
