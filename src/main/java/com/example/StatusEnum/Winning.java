@@ -1,22 +1,16 @@
 package com.example.StatusEnum;
 
+public enum Winning {
+    WIN("WIN"),
 
+    LOSE("LOSE"),
 
-public enum StatusEnum {
-
-    PENDING("PENDING"),
-
-    CANCELLED("CANCELLED"),
-
-    PAYMENT_PENDING("PAYMENT_PENDING"),
-
-    COMPLETED("COMPLETED");
-
+    DRAW("DRAW");
 
 
     private String code;
 
-    StatusEnum (String code) {
+    Winning (String code) {
         this.code = code;
     }
 
@@ -27,6 +21,4 @@ public enum StatusEnum {
     public void setCode(String code) {
         this.code = code;
     }
-
-
 }
