@@ -33,11 +33,11 @@ public class ReplySessionService {
             ResultSet resultSet = st.executeQuery();
             if (resultSet.next()){
 
-                if (StatusEnum.PENDING.equals(resultSet.getString("status"))){
+                if (!StatusEnum.PENDING.equals(resultSet.getString("status"))){
                     throw new Exception("Session already COMPLETED / CANCELLED");
                 }
 
-                if (StringUtils.equals(replySessionRequest.getReceiverNo(),resultSet.getString("receiver_no"))){
+                if (!StringUtils.equals(replySessionRequest.getReceiverNo(),resultSet.getString("receiver_no"))){
                     throw new Exception("You are not authorized to reply to this game");
                 }
 
