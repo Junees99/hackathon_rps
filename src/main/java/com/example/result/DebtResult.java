@@ -2,13 +2,13 @@ package com.example.result;
 
 public class DebtResult {
     private String name;
-    private double amount;
+    private Double amount;
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 

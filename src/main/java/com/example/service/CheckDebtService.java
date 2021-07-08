@@ -51,7 +51,7 @@ public class CheckDebtService {
                     }
                     debtResult.setName(creditorName);
                     debtResult.setMobile_no(creditorNo);
-                    debtResult.setAmount(resultSet1.getDouble("amount"));
+                    debtResult.setAmount(resultSet.getDouble("amount"));
                     debtResultArrayList.add(debtResult);
                 }while (resultSet.next());
                 checkDebtResult.setCreditors(debtResultArrayList);
