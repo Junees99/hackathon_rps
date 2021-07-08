@@ -21,61 +21,61 @@ public class ReplySessionService {
     @Autowired
     private DataSource dataSource;
 
-    public ReplySessionResult replySession(ReplySessionRequest replySessionRequest){
+    public ReplySessionResult replySession(ReplySessionRequest replySessionRequest) {
         ReplySessionResult replySessionResult = new ReplySessionResult();
         replySessionResult.setId(replySessionRequest.getSessionId());
         try (Connection connection = dataSource.getConnection()) {
 
             PreparedStatement st = connection.prepareStatement("SELECT status, receiver_no FROM session where session_id = ?"
-                    ,ResultSet.TYPE_SCROLL_SENSITIVE,
+                    , ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             st.setString(1, replySessionRequest.getSessionId());
             ResultSet resultSet = st.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
 
-                if (!StatusEnum.PENDING.getCode().equals(resultSet.getString("status"))){
+                if (!StatusEnum.PENDING.getCode().equals(resultSet.getString("status"))) {
                     throw new Exception("Session already COMPLETED / CANCELLED");
                 }
 
-                if (!StringUtils.equals(replySessionRequest.getReceiverNo(),resultSet.getString("receiver_no"))){
+                if (!StringUtils.equals(replySessionRequest.getReceiverNo(), resultSet.getString("receiver_no"))) {
                     throw new Exception("You are not authorized to reply to this game");
                 }
 
-            }else {
+            } else {
                 throw new Exception("Session ID does not exist");
             }
 
-            if (!replySessionRequest.getAccept()){
+            if (!replySessionRequest.getAccept()) {
 
-                st = connection.prepareStatement("UPDATE session SET status = ?  WHERE session_id = ?",ResultSet.TYPE_SCROLL_SENSITIVE,
+                st = connection.prepareStatement("UPDATE session SET status = ?  WHERE session_id = ?", ResultSet.TYPE_SCROLL_SENSITIVE,
                         ResultSet.CONCUR_UPDATABLE);
                 st.setString(1, StatusEnum.CANCELLED.getCode());
                 st.setString(2, replySessionRequest.getSessionId());
                 st.executeUpdate();
 
-            }else {
+            } else {
 
-                st = connection.prepareStatement("UPDATE session SET receiver_move = ?  WHERE session_id = ?",ResultSet.TYPE_SCROLL_SENSITIVE,
+                st = connection.prepareStatement("UPDATE session SET receiver_move = ?  WHERE session_id = ?", ResultSet.TYPE_SCROLL_SENSITIVE,
                         ResultSet.CONCUR_UPDATABLE);
                 st.setString(1, replySessionRequest.getReceiverMove());
                 st.setString(2, replySessionRequest.getSessionId());
                 st.executeUpdate();
 
-                st = connection.prepareStatement("SELECT * FROM session WHERE session_id = ?",ResultSet.TYPE_SCROLL_SENSITIVE,
+                st = connection.prepareStatement("SELECT * FROM session WHERE session_id = ?", ResultSet.TYPE_SCROLL_SENSITIVE,
                         ResultSet.CONCUR_UPDATABLE);
                 st.setString(1, replySessionRequest.getSessionId());
-                 resultSet = st.executeQuery();
+                resultSet = st.executeQuery();
                 if (resultSet.next()) {
                     String winnerNo = decideWinner(resultSet);
                     if (winnerNo.equals("0000")) {
-                        st = connection.prepareStatement("UPDATE session SET winner_no = ?, status = ?  WHERE session_id = ?",ResultSet.TYPE_SCROLL_SENSITIVE,
+                        st = connection.prepareStatement("UPDATE session SET winner_no = ?, status = ?  WHERE session_id = ?", ResultSet.TYPE_SCROLL_SENSITIVE,
                                 ResultSet.CONCUR_UPDATABLE);
                         st.setString(1, winnerNo);
                         st.setString(2, StatusEnum.COMPLETED.getCode());
                         st.setString(3, replySessionRequest.getSessionId());
                         st.executeUpdate();
                     } else {
-                        st = connection.prepareStatement("UPDATE session SET winner_no = ?, status = ?  WHERE session_id = ?",ResultSet.TYPE_SCROLL_SENSITIVE,
+                        st = connection.prepareStatement("UPDATE session SET winner_no = ?, status = ?  WHERE session_id = ?", ResultSet.TYPE_SCROLL_SENSITIVE,
                                 ResultSet.CONCUR_UPDATABLE);
                         st.setString(1, winnerNo);
                         st.setString(2, StatusEnum.PAYMENT_PENDING.getCode());
@@ -93,12 +93,11 @@ public class ReplySessionService {
                         replySessionResult.setWinning(Winning.DRAW.getCode());
                     }
 
-                    insertDebt(resultSet.getString("session_id"),debtorNo,winnerNo);
 
                 }
             }
             replySessionResult.setSuccess(true);
-        } catch (Exception e){
+        } catch (Exception e) {
             replySessionResult.setSuccess(false);
             replySessionResult.setErrorMessage(e.getMessage());
             e.printStackTrace();
@@ -113,40 +112,26 @@ public class ReplySessionService {
         String senderNo = resultSet.getString("sender_no");
         String receiverNo = resultSet.getString("receiver_no");
 
-        if (StringUtils.equals(senderMove,receiverMove)){
+        if (StringUtils.equals(senderMove, receiverMove)) {
             return "0000";
         }
 
-       if (Move.ROCK.getCode().equals(senderMove) && Move.PAPER.getCode().equals(receiverMove)){
-               return receiverNo;
-       }
-
-       if (Move.PAPER.getCode().equals(senderMove) && Move.SCISSOR.getCode().equals(receiverMove)){
-               return receiverNo;
-       }
-
-       if (Move.SCISSOR.getCode().equals(senderMove) && Move.ROCK.getCode().equals(receiverMove)){
-               return receiverNo;
-       }
-
-       return senderNo;
-    }
-
-    private void insertDebt(String session, String debtorNo, String winningNo) throws SQLException{
-        String creditorName = "";
-        try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement st = connection.prepareStatement("INSERT INTO debt(session_id,debtor_no,creditor_no,status) VALUES(?,?,?,?)"
-                    ,ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
-            st.setString(1,session);
-            st.setString(2,debtorNo);
-            st.setString(3,winningNo);
-            st.setString(4,"UNSETTLED");
-            st.executeUpdate();
-        }catch (Exception e){
-            throw e;
+        if (Move.ROCK.getCode().equals(senderMove) && Move.PAPER.getCode().equals(receiverMove)) {
+            return receiverNo;
         }
+
+        if (Move.PAPER.getCode().equals(senderMove) && Move.SCISSOR.getCode().equals(receiverMove)) {
+            return receiverNo;
+        }
+
+        if (Move.SCISSOR.getCode().equals(senderMove) && Move.ROCK.getCode().equals(receiverMove)) {
+            return receiverNo;
+        }
+
+        return senderNo;
     }
+
+
 
 
 
