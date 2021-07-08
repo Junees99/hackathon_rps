@@ -19,6 +19,7 @@ public class ConfirmMoneyReceivedService {
     public ConfirmMoneyReceivedResult confirmMoneyReceived(SessionIdReq sessionIdReq){
         String sessionId = sessionIdReq.getSessionId();
         ConfirmMoneyReceivedResult confirmMoneyReceivedResult = new ConfirmMoneyReceivedResult() ;
+        confirmMoneyReceivedResult.setId(sessionIdReq.getSessionId());
 
         try (Connection connection = dataSource.getConnection()) {
             PreparedStatement st = connection.prepareStatement("UPDATE session SET status = ? WHERE session_id = ? ");
