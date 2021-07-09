@@ -6,6 +6,7 @@ public class MobileNoEditor {
 
 
     public static String editMobileNo(String mobile_no){
+        mobile_no = StringUtils.trim(mobile_no);
         mobile_no = StringUtils.replace(mobile_no,"+","");
         mobile_no = StringUtils.replace(mobile_no,"-","");
         mobile_no = StringUtils.replace(mobile_no," ","");
