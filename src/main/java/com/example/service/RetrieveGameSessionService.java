@@ -26,7 +26,7 @@ public class RetrieveGameSessionService {
 
         try (Connection connection = dataSource.getConnection()) {
             ArrayList<GameSessionResult> initiatedGameSessionResultList = new ArrayList<>();
-            ArrayList<GameSessionResult> invitedGameSessionResultList = new ArrayList<>();
+//            ArrayList<GameSessionResult> invitedGameSessionResultList = new ArrayList<>();
 
             String name = "";
 
@@ -72,12 +72,13 @@ public class RetrieveGameSessionService {
                     name = resultSet1.getString("name");
                 }
                 gameSessionResult.setName(name);
-                invitedGameSessionResultList.add(gameSessionResult);
+                initiatedGameSessionResultList.add(gameSessionResult);
+//                invitedGameSessionResultList.add(gameSessionResult);
             }
 
             retrieveGameSessionResult.setSuccess(true);
             retrieveGameSessionResult.setInitiatedGameSessionResultList(initiatedGameSessionResultList);
-            retrieveGameSessionResult.setInvitedGameSessionResultList(invitedGameSessionResultList);
+//            retrieveGameSessionResult.setInvitedGameSessionResultList(invitedGameSessionResultList);
 
         } catch (Exception e){
             retrieveGameSessionResult.setSuccess(false);
