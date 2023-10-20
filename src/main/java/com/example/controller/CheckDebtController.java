@@ -18,7 +18,7 @@ public class CheckDebtController {
     private CheckDebtService checkDebtService;
 
 
-    //etetst
+    //etetstffff
     @PostMapping(value = "/checkDebt")
     public CheckDebtResult checkDebt(@RequestBody MobileNoReq mobileNoReq){
        return checkDebtService.checkDebt(mobileNoReq);
